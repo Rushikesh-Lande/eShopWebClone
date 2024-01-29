@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Item List</title>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #E6E6FA;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+	margin-top: 20px;
+	padding-top: 60px;
+	/* Adjusted padding to account for the fixed topnav */
+	overflow-y: scroll; /* Allow the container to scroll */
+	height: calc(100vh - 60px);
+	/* Adjusted height to account for the fixed topnav */
+}
+
+/* Fixed top navigation */
+.topnav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color:#788383 ;
+	z-index: 1000;
+}
+
+.topnav a {
+	float: left;
+	display: block;
+	color: black;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+}
+
+.topnav a:hover {
+	background-color: #ddd;
+	color:#FFFFFF;
+}
+
+.topnav a.active {
+	color:#FFFFFF;
+}
+
+.topnav .search-container {
+	float: right;
+}
+
+.topnav input[type=text] {
+	padding: 6px;
+	margin-top: 8px;
+	font-size: 17px;
+	border: none;
+}
+
+.topnav .search-container button {
+	float: right;
+	padding: 6px 10px;
+	margin-top: 8px;
+	margin-right: 16px;
+	background: #ddd;
+	font-size: 17px;
+	border: none;
+	cursor: pointer;
+}
+
+.topnav .search-container button:hover {
+	background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+	.topnav .search-container {
+		float: none;
+	}
+	.topnav a, .topnav input[type=text], .topnav .search-container button {
+		float: none;
+		display: block;
+		text-align: left;
+		width: 100%;
+		margin: 0;
+		padding: 14px;
+	}
+	.topnav input[type=text] {
+		border: 1px solid #ccc;
+	}
+}
+
+.item-box {
+	border: 1px solid #ccc;
+	padding: 5px;
+	margin: 5px;
+	background-color: #ffffff;
+	flex: calc(15% - 10px);
+}
+
+.item-image img {
+	max-width: 100%;
+	height: auto;
+}
+
+.search-bar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+.search-input {
+	flex: 1;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.search-button {
+	background-color: #0078d4;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+	margin-left: 10px;
+}
+
+.item-details {
+	text-align: center; /* Center the content horizontally */
+}
+
+.item-link {
+	text-decoration: none; /* Remove underlines */
+	font-weight: bold; /* Make the item name bold */
+	color: black; /* Set the default text color to black */
+	transition: color 0.2s; /* Add a smooth color transition on hover */
+}
+
+.item-link:hover {
+	color: blue; /* Change the text color to blue on hover */
+}
+
+.brand-info {
+	font-weight: 100; /* Adjust the font weight as needed */
+	color: black; /* Set the text color to black */
+}
+
+.price {
+	font-weight: bold; /* Make the price bold */
+}
+
+.price {
+	font-size: 1.2em;
+}
+
+.rupee-sign {
+	font-size: 1.2em;
+}
+
+.menu-button {
+	position: fixed;
+	top: 50px; /* Adjust this value to your preference */
+	left: 20px;
+	z-index: 1001; /* Ensure a higher value than the top navigation bar */
+	color: #1581EE;
+	margin-top: 8px;
+}
+
+.menu-button .burger {
+	width: 30px;
+	height: 4px;
+	background-color: #170B75;
+	margin: 6px 0;
+	transition: 0.4s;
+}
+
+.menu-button.open .burger:nth-child(1) {
+	transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.menu-button.open .burger:nth-child(2) {
+	opacity: 0;
+}
+
+.menu-button.open .burger:nth-child(3) {
+	transform: rotate(45deg) translate(-5px, -6px);
+}
+
+.menu {
+	position: fixed;
+	top: 0;
+	left: -300px;
+	width: 300px;
+	height: 100%;
+	background-color: #E6E6FA;
+	transition: 0.5s;
+}
+
+.menu a {
+	display: block;
+	padding: 20px;
+	color: black;
+	text-decoration: none;
+	font-size: 18px;
+	transition: 0.2s;
+}
+
+.menu a:hover {
+	background-color: white;
+}
+
+.empty-button {
+	display: block;
+	height: 50px; /* Adjust the height as needed */
+	background-color: transparent;
+	pointer-events: none; /* Make it non-clickable */
+	margin-top: 45px; /* Adjust this value to move it down */
+}
+
+.fa-shopping-cart {
+	color: black;
+}
+
+.active {
+	color: rgb(255, 128, 128);
+}
+.fa-shopping-cart {
+  color: white !important;
+  font-size: 20px;
+}
+
+</style>
+</head>
+<body>
+
+	<div class="menu-button" onclick="toggleMenu(this)">
+		<div class="burger"></div>
+		<div class="burger"></div>
+		<div class="burger"></div>
+	</div>
+
+	<!-- Sidebar menu -->
+	<div class="menu" id="sidebarMenu">
+		<a href="#" class="empty-button"></a> <a href="/showHome"
+			class="w3-bar-item w3-button">Add Category</a> <a href="/create"
+			class="w3-bar-item w3-button">Add Item</a> <a href="/stockList"
+			class="w3-bar-item w3-button">Stock List</a> <a href="/uSignIn"
+			class="w3-bar-item w3-button">User Sign In</a> <a href="/list"
+			class="w3-bar-item w3-button">Item List</a> <a href="/uSignIn"
+			class="w3-bar-item w3-button">Add User</a> <a href="/showCustomer"
+			class="w3-bar-item w3-button">Customer D</a> <a
+			href="/generate-bill-form" class="w3-bar-item w3-button">Generate
+			Bill</a>
+
+	</div>
+	<!-- Top navigation -->
+	<div class="topnav">
+		<a class="active" href="/modern-list"> <img
+			src="/static/images/HomeLogo.jpg" alt="Your Logo"
+			style="width: 100px; height: 28px;" />
+		</a> <a class="active" href="/cart-list"><i class="fa fa-fw fa-shopping-cart"
+		 style="color: white; "></i> Cart</a>
+
+
+			 <a href="#contact" style="color: white; font-size:17px ">Demo</a>
+		<div class="search-container">
+			<input type="text" id="searchInput" placeholder="Search.."
+				onkeyup="searchItems()">
+			<button type="button">
+				<i class="fa fa-search"></i>
+			</button>
+		</div>
+	</div>
+
+	<div class="container">
+		<!-- Search bar container -->
+
+		<div class="row">
+			<!-- Loop through your list of items and generate a box for each item -->
+			<div th:each="item : ${itemList}" class="col-md-4 item-box">
+				<div class="item-image">
+					<img th:src="${item.imageLink}" alt="Item Image" />
+				</div>
+				<div class="item-details">
+    <a th:href="'/item?id=' + ${item.id}" th:text="${item.itemName}" class="item-link"></a>
+    <p th:text="${item.brand}" class="brand-info"></p>
+    <p th:if="${item.currentQnt == 0}" style="color: red;">Out of Stock</p>
+    <p th:if="${item.currentQnt > 0}">Available Qty: <span th:text="${item.currentQnt}"></span></p>
+    <p>₹ <span class="price" th:text="${item.bPrice}"></span> <span class="rupee-sign"></span></p>
+</div>
+			</div>
+		</div>
+	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script>
+		function toggleMenu(x) {
+			var sidebarMenu = document.getElementById("sidebarMenu");
+			if (sidebarMenu.style.left === "0px") {
+				sidebarMenu.style.left = "-300px";
+				x.classList.remove("open");
+			} else {
+				sidebarMenu.style.left = "0px";
+				x.classList.add("open");
+			}
+		}
+		// Function to perform item search
+		function searchItems() {
+			var searchInput = document.getElementById("searchInput").value
+					.toLowerCase();
+			var itemBoxes = document.querySelectorAll(".item-box");
+
+			itemBoxes
+					.forEach(function(itemBox) {
+						var itemName = itemBox.querySelector("a").innerText
+								.toLowerCase();
+						var itemBrand = itemBox.querySelector("p:nth-child(2)").innerText
+								.toLowerCase();
+
+						if (itemName.includes(searchInput)
+								|| itemBrand.includes(searchInput)) {
+							itemBox.style.display = "block";
+						} else {
+							itemBox.style.display = "none";
+						}
+					});
+		}
+	</script>
+</body>
+</html>

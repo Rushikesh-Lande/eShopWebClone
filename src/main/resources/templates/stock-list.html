@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <title>Clothing Store</title>
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock List</title>
+    
+    <!-- Include Bootstrap CSS from CDN -->
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f0f0f0;
+        }
+        
+        tbody tr:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Update sidebar positioning and style */
+        #mySidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 250px;
+            z-index: 3;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            padding-top: 20px;
+            overflow-y: auto;
+        }
+
+        /* Adjust container to account for sidebar */
+        .container {
+            margin-left: 270px; /* Add margin to accommodate sidebar width */
+        }
+        
+        .w3-sidebar {
+            background-color: white;
+        }
+        
+        .w3-wide {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .w3-bar-item {
+            padding: 10px;
+            text-align: left;
+            font-size: 16px;
+        }
+        
+        .w3-bar-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+    
+</head>
+<body>
+    <nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+        <div class="w3-container w3-display-container w3-padding-16">
+            <h3 class="w3-wide"><b>Clothing Store</b></h3>
+        </div>
+        <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
+            <a href="/modern-list" class="w3-bar-item w3-button">Home</a>
+            <a href="/stockForm" class="w3-bar-item w3-button">Add Stock</a>
+            <a href="/create" class="w3-bar-item w3-button">Add Items</a>
+            <a href="/showHome" class="w3-bar-item w3-button">Add Category</a>
+            <a href="/stockList" class="w3-bar-item w3-button">Stock List</a>
+            <a href="/list" class="w3-bar-item w3-button">Item List</a>
+            <a href="/uSignIn" class="w3-bar-item w3-button">Add User</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 5</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 6</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 7</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 8</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 9</a>
+            <a href="#" class="w3-bar-item w3-button">Demo 10</a>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <h2>Stock List</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Stock Add Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="stock : ${stock}">
+                    <td th:text="${stock.id}"></td>
+                    <td th:text="${stock.item.itemName}"></td>
+                    <td th:text="${stock.quantity}"></td>
+                    <td th:text="${stock.stockAddDate}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
+    <script>
+        function updateLiveTime() {
+            var now = moment();
+            var timezone = moment.tz.guess();
+            var liveTime = now.tz(timezone).format("dddd, MMMM Do YYYY, h:mm:ss A z");
+            document.getElementById("liveTime").innerHTML = liveTime;
+            setTimeout(updateLiveTime, 1000);
+        }
+
+        updateLiveTime();
+    </script>
+</body>
+</html>

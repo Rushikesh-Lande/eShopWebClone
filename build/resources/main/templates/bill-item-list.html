@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+    href="https://example.com/path-to/your-custom-stylesheet.css">
+<link rel="stylesheet" href="/path-to/your-second-custom-stylesheet.css">
+<style>
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: #E6E6FA;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap; /* Enable wrapping for responsiveness */
+}
+
+/* Form Styles */
+.form-container {
+    flex: 0.7;
+    padding: 15px;
+    min-width: 320px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 3px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* List Styles */
+.list-container {
+    flex: 0.9;
+    padding: 15px;
+    min-width: 320px;
+}
+
+.list-container input[name='price'], .list-container input[name='quantity']
+    {
+    width: 50px;
+}
+
+/* Scrollable Tables */
+.table-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Customer Details Table */
+.customer-details-table-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.customer-details-table {
+    width: 100%; /* Make the table width 100% */
+}
+
+/* Style for customer details table cells */
+.customer-details-table td {
+    padding: 8px; /* Adjust padding as needed */
+    border: 1px solid #ccc; /* Add borders for better visibility */
+}
+
+/* Search Input */
+.mb-3 {
+    margin-bottom: 15px;
+}
+
+/* Comments */
+#demo3 {
+    resize: vertical; /* Allow vertical resizing of the textarea */
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: none; /* Initially hidden */
+    justify-content: center;
+    align-items: center;
+    z-index: 9999; /* Ensure the popup appears above other content */
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    max-width: 80%; /* Adjust as needed */
+    max-height: 80%; /* Adjust as needed */
+    overflow-y: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: red;
+}
+
+/* Show Items Button Styles */
+.show-items-button {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.show-items-button:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+/* Adjust the width of the price and quantity inputs */
+.popup-content {
+    text-align: center;
+}
+
+/* Style for the close button */
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: red;
+}
+
+/* Adjust the width of the price and quantity inputs */
+.price-input {
+    width: 100px;
+}
+
+.quantity-input {
+    width: 50px;
+}
+
+/* Style for the search input */
+#searchInput {
+    width: 100%;
+    padding: 5px;
+}
+
+/* Style for the table headers */
+.table th {
+    text-align: center;
+    position: sticky; /* Make the headers sticky */
+    top: 0; /* Stick to the top of the container */
+    background-color: #fff; /* Background color for the sticky headers */
+    z-index: 1; /* Ensure headers appear above table cells */
+}
+
+/* Style for the table cells */
+.table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* Style for the Add button */
+.table .btn-primary {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+/* Remove border spacing between table cells */
+.table {
+    border-collapse: collapse;
+}
+
+/* Style for the table body (scrollable part) */
+.table tbody {
+    max-height: 400px; /* Adjust the max height as needed */
+    overflow-y: auto;
+}
+</style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="form-container">
+            <h2>Generate Bill</h2>
+            <!-- Wrap the Customer Details table in a div with a fixed height and scrollable -->
+            <div class="customer-details-table-wrapper">
+                <form action="/saveBillDetails" method="post" >
+                
+                    <table class="table table-striped customer-details-table">
+                        <tbody id="customerDetailsTableBody">
+                            <tr>
+                                <td><label for="customerName">Customer Name</label></td>
+                                <td><input type="text" class="form-control"
+                                    id="customerName" name="customerName"
+                                    th:value="${customer.name}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td><label for="customerMobile">Customer Mobile</label></td>
+                                <td><input type="text" class="form-control"
+                                    id="customerMobile" name="customerMobile"
+                                    th:value="${customer.mobile}" readonly></td>
+                            </tr>
+                            <tr>
+                                <td><label for="customerEmail">Customer Email</label></td>
+                                <td><input type="email" class="form-control"
+                                    id="customerEmail" name="customerEmail"
+                                    th:value="${customer.email}" readonly></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mb-3">
+                        <label for="demo2">Total Price</label>
+                        <input type="text" class="form-control" id="totalPrice" name="totalPrice" readonly>
+                    </div>
+                    <div class="mb-3">
+                        <label for="demo3">Remark</label>
+                        <textarea class="form-control" id="demo3" name="demo3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Generate
+                        Bill</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Add the "Show Items List" button here -->
+        <button type="button" class="btn show-items-button"
+            onclick="showItemsListPopup()">Show Items List</button>
+
+        <!-- Create a container for the popup (initially hidden) -->
+        <div class="popup" id="itemsListPopup">
+            <div class="popup-content">
+                <span class="close-button" onclick="closeItemsListPopup()">&#10006;</span>
+                <h1 class="mb-4">Current Stock</h1>
+
+                <!-- Add a search input field above the current stock table -->
+                <div class="mb-3">
+                    <label for="searchInput" class="form-label">Search Item:</label> <input
+                        type="text" class="form-control" id="searchInput"
+                        oninput="filterItems()" placeholder="Search by Item Name or Brand">
+                </div>
+                <!-- Wrap the Current Stock table in a div with a fixed height and scrollable -->
+                <div class="table-wrapper">
+                    <form id="itemListForm">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Brand</th>
+                                    <th>Item Name</th>
+                                    <th>Size</th>
+                                    <th>Size no</th>
+                                    <th>Gender</th>
+                                    <th>Color</th>
+                                    <th>Price P/I</th>
+                                    <th>Qty</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="item : ${items}">
+                                    <td th:text="${item.brand}"></td>
+                                    <td th:text="${item.itemName}"></td>
+
+                                    <td th:text="${item.size}"></td>
+                                    <td th:text="${item.sizeNumber}"></td>
+                                    <td th:text="${item.forGender}"></td>
+                                    <td th:text="${item.color}"></td>
+                                    <td><input type="text" class="form-control price-input"
+                                        name="price" value="0"></td>
+                                    <td><input type="text" class="form-control quantity-input"
+                                        name="quantity" value="0"></td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary"
+                                            onclick="addItemToList(this)">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript function to show the items list popup
+        function showItemsListPopup() {
+            var popup = document.getElementById("itemsListPopup");
+            if (popup) {
+                popup.style.display = "flex"; // Show the popup
+            }
+        }
+
+        // Call the updateTotalPrice function initially to calculate the total price
+    
+
+        // JavaScript function to filter items based on the search input
+        function filterItems() {
+            var searchInput = document.getElementById("searchInput").value
+                    .toLowerCase();
+            var rows = document.querySelectorAll("#itemListForm tbody tr");
+
+            rows.forEach(function(row) {
+                var itemNameCell = row.cells[0];
+                var itemName = itemNameCell.textContent.toLowerCase();
+
+                var brandCell = row.cells[1];
+                var brand = brandCell.textContent.toLowerCase();
+
+                if (itemName.includes(searchInput)
+                        || brand.includes(searchInput)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        function closeItemsListPopup() {
+            var popup = document.getElementById("itemsListPopup");
+            if (popup) {
+                popup.style.display = "none"; // Hide the popup
+            }
+        }
+    </script>
+</body>
+</html>

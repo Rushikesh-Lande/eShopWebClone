@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Item</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #F4F6F6 ;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #F4F6F6 ;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 3px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .btn-items-list {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+         .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #E6E6FA;
+            z-index: 1000;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+           
+            color: white;
+        }
+
+        .topnav .search-container {
+            float: right;
+        }
+
+        .topnav input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+        }
+
+        .topnav .search-container button {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+       .topnav .search-container button:hover {
+            background: #ccc;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav .search-container {
+                float: none;
+            }
+
+            .topnav a, .topnav input[type=text], .topnav .search-container button {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+
+            .topnav input[type=text] {
+                border: 1px solid #ccc;
+            }
+        }
+        .topnav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #E6E6FA;
+            z-index: 1000;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+
+        .topnav a.active {
+           
+            color: white;
+        }
+
+        .topnav .search-container {
+            float: right;
+        }
+
+        .topnav input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            font-size: 17px;
+            border: none;
+        }
+
+        .topnav .search-container button {
+            float: right;
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .topnav .search-container button:hover {
+            background: #ccc;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav .search-container {
+                float: none;
+            }
+
+            .topnav a, .topnav input[type=text], .topnav .search-container button {
+                float: none;
+                display: block;
+                text-align: left;
+                width: 100%;
+                margin: 0;
+                padding: 14px;
+            }
+
+            .topnav input[type=text] {
+                border: 1px solid #ccc;
+            }
+        }
+
+ .menu-button {
+    position: fixed;
+    top: 50px; /* Adjust this value to your preference */
+    left: 20px;
+    z-index: 1001; /* Ensure a higher value than the top navigation bar */
+    color: #1581EE;
+    margin-top: 8px;
+}
+        .menu-button .burger {
+            width: 30px;
+            height: 4px;
+            background-color: #170B75;
+            margin: 6px 0;
+            transition: 0.4s;
+        }
+
+        .menu-button.open .burger:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-button.open .burger:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.open .burger:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        .menu {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100%;
+    background-color: #E6E6FA;
+    transition: 0.5s;
+}
+        .menu a {
+            display: block;
+            padding: 20px;
+            color: black;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .menu a:hover {
+            background-color: white;
+        }
+        .empty-button {
+    display: block;
+    height: 50px; /* Adjust the height as needed */
+    background-color: transparent;
+    pointer-events: none; /* Make it non-clickable */
+    margin-top: 45px; /* Adjust this value to move it down */
+}
+        
+    </style>
+
+<body>
+ <div class="topnav">
+      <a class="active" href="/modern-list">
+    <img src="/static/images/HomeLogo.jpg" alt="Your Logo" style="width: 100px; height: 28px;" />
+</a>
+
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </div>
+
+<div class="menu-button" onclick="toggleMenu(this)">
+    <div class="burger"></div>
+    <div class="burger"></div>
+    <div class="burger"></div>
+</div>
+
+<!-- Sidebar menu -->
+<div class="menu" id="sidebarMenu">
+    <a href="#" class="empty-button"></a>
+     <a href="/showHome" class="w3-bar-item w3-button">Add Category</a>
+        <a href="/create" class="w3-bar-item w3-button">Add Item</a>
+        <a href="/stockList" class="w3-bar-item w3-button">Stock List</a>
+        <a href="/uSignIn" class="w3-bar-item w3-button">User Sign In</a>
+        <a href="/list" class="w3-bar-item w3-button">Item List</a>
+        <a href="/uSignIn" class="w3-bar-item w3-button">Add User</a>
+        <a href="/showCustomer" class="w3-bar-item w3-button">Customer D</a>
+        <a href="/generate-bill-form" class="w3-bar-item w3-button">Generate Bill</a>
+        
+</div>
+    <div class="container mt-5">
+        <h1 class="mb-4">Create Item</h1>
+        
+         <a href="/list" class="btn btn-primary btn-items-list">Items List</a>
+        <form th:action="@{/save}" method="post" >
+            <div class="mb-3">
+                <label for="itemName" class="form-label">Item Name:</label>
+                <input type="text" class="form-control" id="itemName" name="itemName">
+            </div>
+
+            <div class="mb-3">
+                <label for="brand" class="form-label">Brand:</label>
+                <input type="text" class="form-control" id="brand" name="brand">
+            </div>
+
+            <div class="mb-3">
+                <label for="size" class="form-label">Size:</label>
+                <input type="text" class="form-control" id="size" name="size">
+            </div>
+
+            <div class="mb-3">
+                <label for="sizeNumber" class="form-label">Size Number:</label>
+                <input type="text" class="form-control" id="sizeNumber" name="sizeNumber">
+            </div>
+
+            <div class="mb-3">
+                <label for="forGender" class="form-label">For Gender:</label>
+                <input type="text" class="form-control" id="forGender" name="forGender">
+            </div>
+
+            <div class="mb-3">
+                <label for="color" class="form-label">Color:</label>
+                <input type="text" class="form-control" id="color" name="color">
+            </div>
+
+            <div class="mb-3">
+                <label for="designType" class="form-label">Design Type:</label>
+                <input type="text" class="form-control" id="designType" name="designType">
+            </div>
+
+            <div class="mb-3">
+                <label for="bPrice" class="form-label">Base Price:</label>
+                <input type="number" class="form-control" id="bPrice" name="bPrice">
+            </div>
+             <div class="mb-3">
+                <label for="currentQnt" class="form-label">Quantity:</label>
+                <input type="number" class="form-control" id="currentQnt" name="currentQnt">
+            </div>
+
+            <div class="mb-3">
+                <label for="discount" class="form-label">Discount:</label>
+                <input type="number" class="form-control" id="discount" name="discount">
+            </div>
+
+            <div class="mb-3">
+                <label for="offers" class="form-label">Offers:</label>
+                <input type="text" class="form-control" id="offers" name="offers">
+            </div>
+
+            <div class="mb-3">
+                <label for="offerStartDate" class="form-label">Offer Start Date:</label>
+                <input type="date" class="form-control" id="offerStartDate" name="offerStartDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="offerEndDate" class="form-label">Offer End Date:</label>
+                <input type="date" class="form-control" id="offerEndDate" name="offerEndDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="addedBy" class="form-label">Added By:</label>
+                <input type="text" class="form-control" id="addedBy" name="addedBy">
+            </div>
+            <div class="mb-3">
+                <label for="imageLink" class="form-label">image Link:</label>
+                <input type="text" class="form-control" id="imageLink" name="imageLink">
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Save Item</button>
+           
+           
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.33/moment-timezone-with-data.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+	<script>
+	function toggleMenu(x) {
+        var sidebarMenu = document.getElementById("sidebarMenu");
+        if (sidebarMenu.style.left === "0px") {
+            sidebarMenu.style.left = "-300px";
+            x.classList.remove("open");
+        } else {
+            sidebarMenu.style.left = "0px";
+            x.classList.add("open");
+        }
+    }
+	function updateLiveTime() {
+	    var now = moment();
+	    var timezone = moment.tz.guess();
+	    var liveTime = now.tz(timezone).format("dddd, MMMM Do YYYY, h:mm:ss A z");
+	    document.getElementById("liveTime").innerHTML = liveTime;
+	    setTimeout(updateLiveTime, 1000);
+	}
+
+	updateLiveTime();
+	</script>
+</body>
+</html>
+
+	
+

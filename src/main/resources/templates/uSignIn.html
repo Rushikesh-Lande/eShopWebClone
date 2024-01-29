@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <title>Clothing Store</title>
+</head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+    
+    <!-- Include Bootstrap CSS from CDN -->
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #E6E6FA;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 3px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+    <div class="w3-container w3-display-container w3-padding-16">
+              <h3 class="w3-wide"><b>Clothing Store</b></h3>
+    </div>
+    <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
+    <a href="/modern-list" class="w3-bar-item w3-button">Home</a>
+        <a href="/stockForm" class="w3-bar-item w3-button">Add Stock</a>
+        <a href="/create" class="w3-bar-item w3-button">Add Items</a>
+        
+        <!-- Add 10 more buttons -->
+        <a href="/showHome" class="w3-bar-item w3-button">Add Category</a>
+        <a href="/stockList" class="w3-bar-item w3-button">Stock List</a>
+        <a href="/list" class="w3-bar-item w3-button">Item List</a>
+        <a href="/uSignIn" class="w3-bar-item w3-button">Add User</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 5</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 6</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 7</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 8</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 9</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 10</a>
+    </div>
+</nav>
+    <div class="container mt-5">
+        <h1 class="text-center">User Registration</h1>
+        <form action="#" th:action="@{/submitData}" th:object="${user}" method="post" class="mt-4">
+           
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" th:field="*{name}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" th:field="*{email}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="mobileNumber">Mobile Number:</label>
+                <input type="text" id="mobileNumber" th:field="*{mobileNumber}" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input type="text" id="address" th:field="*{address}" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                 <select id="role" th:field="*{role}" class="form-control">
+                    <option value="Customer">Customer</option>
+                    <option value="Salesperson">Salesperson</option>
+                    <option value="Manager">Manager</option>
+                    <option value="Inventory-Manager">Inventory Manager</option>
+                    <option value="Accountant">Accountant</option>
+                    <option value="Marketing-Personnel">Marketing Personnel</option>
+                    <option value="Support-Staff">Support Staff</option>
+                    <option value="Vendor">Vendor</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" th:field="*{password}" class="form-control" required>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="isActive" th:field="*{active}" class="form-check-input">
+                <label class="form-check-label" for="isActive">Active</label>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" id="blocked" th:field="*{blocked}" class="form-check-input">
+                <label class="form-check-label" for="blocked">Blocked</label>
+            </div>
+            <button type="submit" class="btn btn-primary mt-3">Register</button>
+        </form>
+    </div>
+    
+    <!-- Include Bootstrap JS and jQuery from CDN -->
+    <script th:src="@{https://code.jquery.com/jquery-3.5.1.slim.min.js}"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js}"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js}"></script>
+</body>
+</html>

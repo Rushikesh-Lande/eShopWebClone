@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- Include your CSS and other meta tags here -->
+</head>
+<body>
+	<div class="container">
+		<h2>Generate Bill</h2>
+		<h3>Customer Details</h3>
+		<form action="/saveBillDetails" method="post">
+			<div class="form-group">
+				<label for="customerName">Customer Name</label> <input type="text"
+					class="form-control" id="customerName" name="customerName"
+					th:value="${customer.name}" readonly>
+			</div>
+			<div class="form-group">
+				<label for="customerMobile">Customer Mobile</label> <input
+					type="text" class="form-control" id="customerMobile"
+					name="customerMobile" th:value="${customer.mobile}" readonly>
+			</div>
+			<div class="form-group">
+				<label for="customerEmail">Customer Email</label> <input
+					type="email" class="form-control" id="customerEmail"
+					name="customerEmail" th:value="${customer.email}" readonly>
+			</div>
+
+			<div class="form-group">
+				<label for="customerAddress">Customer Address</label>
+				<textarea class="form-control" id="customerAddress"
+					name="customerAddress" readonly th:text="${customer.address}"></textarea>
+			</div>
+
+
+
+			<h3>Bill Items</h3>
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Item Name</th>
+						<th>Brand</th>
+						<th>Size</th>
+						<th>Size Number</th>
+						<th>Gender</th>
+						<th>Color</th>
+						<th>Price</th>
+						<th>Quantity</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item : ${billItem}" class="item-row">
+						<td th:text="${item.itemName}"></td>
+						<td th:text="${item.brand}"></td>
+						<td th:text="${item.size}"></td>
+						<td th:text="${item.sizeNumber}"></td>
+						<td th:text="${item.forGender}"></td>
+						<td th:text="${item.color}"></td>
+						<td class="item-price" th:text="${item.price}"></td>
+						<td class="item-quantity" th:text="${item.quantity}"></td>
+					</tr>
+				</tbody>
+
+			</table>
+			<div class="form-group">
+				<label for="demo1">Total Price</label> <input type="text"
+					class="form-control" id="demo1" name="demo1">
+			</div>
+
+			<div class="form-group">
+				<label for="demo3">Date-</label> <input type="date"
+					class="form-control" id="demo3" name="demo3">
+			</div>
+
+			<div class="form-group">
+    <label for="demo3">Remark</label>
+    <input type="text" class="form-control" id="demo3" name="demo3">
+</div>
+
+
+			<button type="submit" class="btn btn-primary">Generate Bill</button>
+		</form>
+	</div>
+	<script>
+    // Get references to relevant elements
+    const items = document.querySelectorAll(".item-row");
+    const totalPriceInput = document.getElementById("demo1");
+
+    // Calculate and update the total price
+    function calculateTotalPrice() {
+        let totalPrice = 0;
+        items.forEach(item => {
+            const price = parseFloat(item.querySelector(".item-price").textContent);
+            const quantity = parseInt(item.querySelector(".item-quantity").textContent);
+            totalPrice += price * quantity;
+        });
+        totalPriceInput.value = totalPrice.toFixed(2); // Display total with two decimal places
+    }
+
+    // Call the calculateTotalPrice function when the page loads
+    document.addEventListener("DOMContentLoaded", calculateTotalPrice);
+
+    // Call the calculateTotalPrice function whenever an input changes (e.g., quantity)
+    items.forEach(item => {
+        item.addEventListener("input", calculateTotalPrice);
+    });
+</script>
+</body>
+</html>

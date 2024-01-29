@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   
+    <title>Clothing Store</title>
+</head>
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management</title>
+    
+    <!-- Include Bootstrap CSS from CDN -->
+    <link rel="stylesheet" th:href="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            background-color:#E6E6FA;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group label {
+            font-weight: bold;
+        }
+        .form-control {
+            border-radius: 3px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        /* Remove underlines from all buttons */
+.w3-bar-item.w3-button,
+.btn {
+    text-decoration: none !important;
+}
+        
+    </style>
+</head>
+
+<body>
+
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+</nav>
+<nav class="w3-sidebar w3-bar-block w3-white w3-collapse w3-top" style="z-index:3;width:250px" id="mySidebar">
+     <div class="w3-container w3-display-container w3-padding-16">
+              <h3 class="w3-wide"><b>Clothing Store</b></h3>
+    </div>
+    <div class="w3-padding-16 w3-large w3-text-grey" style="font-weight:bold">
+    <a href="/homePage" class="w3-bar-item w3-button">Home</a>
+        <a href="/stockForm" class="w3-bar-item w3-button">Add Stock</a>
+        <a href="/create" class="w3-bar-item w3-button">Add Items</a>
+        
+        <!-- Add 10 more buttons -->
+        <a href="/showHome" class="w3-bar-item w3-button">Add Category</a>
+        <a href="/stockList" class="w3-bar-item w3-button">Stock List</a>
+        <a href="/list" class="w3-bar-item w3-button">Item List</a>
+        <a href="/uSignIn" class="w3-bar-item w3-button">Add User</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 5</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 6</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 7</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 8</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 9</a>
+        <a href="#" class="w3-bar-item w3-button">Demo 10</a>
+    </div>
+</nav>
+
+
+<a href="/stockList" class="btn btn-primary w3-button w3-right" style="position: absolute; top: 10px; right: 20px;">Stock List</a>
+<div class="container mt-5">
+    <h2>Stock Management</h2>
+    
+    <form th:action="@{/saveStock}" th:object="${stock}" method="post">
+        <!-- Hidden input field for ID (for editing existing stock entry) -->
+        <input type="hidden" th:field="*{id}">
+        <div class="w3-container w3-padding-16">
+    
+</div>
+        
+        <div class="form-group">
+            <label for="item">Item:</label>
+            <!-- Dropdown to select an item -->
+            <select class="form-control" id="item" th:field="*{item}">
+                <option th:each="item : ${items}" th:value="${item.id}" th:text="${item.itemName}"></option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" class="form-control" id="quantity" th:field="*{quantity}">
+        </div>
+        
+        <div class="form-group">
+            <label for="stockAddDate">Stock Build Date:</label>
+            <input type="date" class="form-control" id="stockAddDate" th:field="*{stockAddDate}">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save Stock</button>
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    function convertDate() {
+        var stockAddDateInput = document.getElementById("stockAddDate");
+        var selectedDate = new Date(stockAddDateInput.value);
+        var convertedDate = new Date(selectedDate.getTime() + selectedDate.getTimezoneOffset() * 60000);
+        stockAddDateInput.value = convertedDate.toISOString().split('T')[0];
+    }
+</script>
+<script>
+    // Accordion 
+    function myAccFunc() {
+        var x = document.getElementById("demoAcc");
+        if (x.className.indexOf("w3-show") == -1) {
+            x.className += " w3-show";
+        } else {
+            x.className = x.className.replace(" w3-show", "");
+        }
+    }
+
+   
+</script>
+
+</body>
+</html>
+

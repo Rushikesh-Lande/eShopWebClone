@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Category list</title>
+
+</head>
+<body>
+     <table style="border:1px solid rgb(0, 0, 160); padding:10px;">
+		 <thead>
+			 <tr>
+				 <th style="border:1px solid rgb(0, 0, 64); padding:10px;">Id</th> 
+				 <th style="border:1px solid rgb(0, 0, 64); padding:10px;">Name</th>
+				 <th style="border:1px solid rgb(0, 0, 64); padding:10px;">Description,</th>
+			 </tr>
+		 </thead>
+         <tbody>
+			<tr th:each="model:${listmodel}" style="border:1px solid tomato; padding:10px;">
+				<td th:text="${model.id}" style="border:1px solid tomato; padding:10px;"></td>
+				<td th:text="${model.name}" style="border:1px solid tomato; padding:10px;"></td>
+				<td th:text="${model.description}" style="border:1px solid tomato; padding:10px;"></td>
+			</tr>
+		 </tbody>
+     </table>
+</body>
+</html>
