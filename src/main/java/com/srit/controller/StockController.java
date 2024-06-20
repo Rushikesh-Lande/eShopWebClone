@@ -34,7 +34,7 @@ public class StockController {
 	public String addStock(@ModelAttribute Stock stock,@RequestParam("item")Long item_id  ) {	
 		Item itm=itemRepo.findById(item_id).orElse(null);		
 		stock.setItem(itm);
-		userService.saveStock(stock);
+		userService.saveStock(stock);	
 		return "redirect:/stockForm";		
 	}
 	@GetMapping("/homePage")

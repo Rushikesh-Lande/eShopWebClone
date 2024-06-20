@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-ShopApplication<eShopWebClone>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.srit.ShopApplication",
+            "projectName": "eShopWebClone",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
